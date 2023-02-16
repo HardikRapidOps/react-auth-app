@@ -1,6 +1,6 @@
 import { Button, Form, Input, message } from "antd";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAddUserData } from "../../../hooks/useUserData";
 import { SignInWithGoogle } from "../SignInWithGoogle";
 
@@ -12,6 +12,7 @@ type OnFinishProps = {
 };
 
 export const SignUp = () => {
+  const navigate = useNavigate();
   const [messageApi, contextHolder] = message.useMessage();
 
   const { mutate: addUser } = useAddUserData();
@@ -32,6 +33,7 @@ export const SignUp = () => {
         type: "success",
         content: "User account created successfully",
       });
+      navigate("/sign-in");
     } catch (err) {
       console.log(err);
     }

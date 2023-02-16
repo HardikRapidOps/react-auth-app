@@ -6,6 +6,7 @@ export const SignOut = () => {
 
   const logout = () => {
     localStorage.removeItem("user");
+    localStorage.setItem("logout-event", "true");
     navigate("/sign-in");
   };
 

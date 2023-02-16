@@ -18,7 +18,15 @@ function App() {
     if (!user) {
       navigate("/sign-in");
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    // Logout from all the tabs
+    window.addEventListener("storage", (event) => {
+      if (event.key === "logout-event") {
+        localStorage.removeItem("logout-event");
+        navigate("/sign-in");
+      }
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
