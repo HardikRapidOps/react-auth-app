@@ -4,11 +4,19 @@ import { Link } from "react-router-dom";
 import { useAddUserData } from "../../../hooks/useUserData";
 import { SignInWithGoogle } from "../SignInWithGoogle";
 
+type OnFinishProps = {
+  email: string;
+  fullName: string;
+  username: string;
+  password: string;
+};
+
 export const SignUp = () => {
   const [messageApi, contextHolder] = message.useMessage();
+
   const { mutate: addUser } = useAddUserData();
 
-  const onFinish = async (values) => {
+  const onFinish = async (values: OnFinishProps) => {
     try {
       const userExists = await axios.get(
         `http://localhost:4000/users?email=${values.email}`
@@ -29,7 +37,7 @@ export const SignUp = () => {
     }
   };
 
-  const onFinishFailed = (errorInfo) => {
+  const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
   };
 

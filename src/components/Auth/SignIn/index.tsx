@@ -7,7 +7,7 @@ export const SignIn = () => {
   const navigate = useNavigate();
   const [messageApi, contextHolder] = message.useMessage();
 
-  const onFinish = async (values) => {
+  const onFinish = async (values: { email: string; password: string }) => {
     const userExists = await axios.get(
       `http://localhost:4000/users?email=${values.email}`
     );
@@ -34,7 +34,7 @@ export const SignIn = () => {
     navigate("/");
   };
 
-  const onFinishFailed = (errorInfo) => {
+  const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
   };
 

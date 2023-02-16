@@ -4,13 +4,24 @@ import jwtDecode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import { useAddUserData } from "../../../hooks/useUserData";
 
+type JwtDecodeProps = {
+  email: string;
+  name: string;
+  given_name: string;
+  sub: string;
+};
+
 export const SignInWithGoogle = () => {
   const navigate = useNavigate();
 
   const { mutate: addUser } = useAddUserData();
 
-  const successHandler = async (credentialResponse) => {
-    const userData = jwtDecode(credentialResponse.credential);
+  const successHandler = async (credentialResponse: {
+    credential?: string;
+  }) => {
+    const userData = jwtDecode<JwtDecodeProps>(
+      credentialResponse.credential ?? ""
+    );
     const userExists = await axios.get(
       `http://localhost:4000/users?email=${userData.email}`
     );
@@ -27,8 +38,8 @@ export const SignInWithGoogle = () => {
     navigate("/");
   };
 
-  const errorHandler = (error) => {
-    console.log("Login Failed", error);
+  const errorHandler = () => {
+    console.log("Login Failed");
   };
 
   return (
